@@ -1,7 +1,6 @@
 # vorlesung-datenbanken
-Alles rund um die Vorlesung Datenbanken an der DHBW
+Alles rund um meine Vorlesung Datenbanken an der DHBW im Rahmen des IMBIT Studiengangs
 
-TBD
+Die ersten Elemente: SQLite Datenbank zum üben.
 
-hier die DB
-
+Files mit SQL Statements, die in der Vorlesung vorkommen.
