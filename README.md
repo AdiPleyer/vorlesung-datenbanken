@@ -1,4 +1,4 @@
-# vorlesung-datenbanken
+# Vorlesung Datenbanken
 Alles rund um meine Vorlesung Datenbanken an der DHBW im Rahmen des IMBIT Studiengangs
 
 Die ersten Beiträge:
