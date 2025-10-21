@@ -1,0 +1,119 @@
+--- #15 
+
+CREATE TABLE better_hotels AS 
+     (SELECT * FROM hotels WHERE rating > 3)
+     WITH DATA;
+
+--- #23 ff
+
+INSERT INTO hotels
+	VALUES ('HDB-Marriot1', 'Marriot', 'Heidelberg', '4', 'Germany', 'yes');
+
+INSERT INTO hotels (UniqueName, HotelName, City, Country)
+	VALUES ('HDB-Marriot2', 'Marriot', 'Heidelberg', 'Germany');
+
+INSERT INTO hotels (UniqueName, HotelName, City, Country, Rating)
+	SELECT City || '-' || 'HDLP', 'Hotel de la Poste', City, Country, Terminals*2 
+		FROM airports
+		WHERE Country = 'France';
+
+
+--- #25
+
+UPDATE hotels SET Rating = '5' WHERE UniqueName = 'WSL-Palatin';
+
+UPDATE hotels SET Rating = Rating + '1' WHERE Country = 'France' and WiFi = 'yes';
+UPDATE hotels SET Rating = Rating + '1' WHERE Country = 'Germany';
+
+UPDATE hotels SET Rating = '1';
+
+--- #26
+
+DELETE FROM hotels WHERE UniqueName = '1234-3123-SDSDF';
+
+DELETE FROM hotels WHERE Country = 'France' and WiFi = 'yes';
+
+DELETE FROM hotels;
+
+
+-- #32 JOINs
+
+select airport, name, code, airportname from airports join             bigairports on airport = code;
+select airport, name, code, airportname from airports left outer join  bigairports on airport = code;
+select airport, name, code, airportname from airports right outer join bigairports on airport = code;
+
+select city, h.name, a.airport, a.name from hotels h join             airports a using (city) order by city;
+select city, h.name, a.airport, a.name from hotels h left outer join  airports a using (city) order by city;
+select city, h.name, a.airport, a.name from hotels h right outer join airports a using (city) order by city;
+select city, h.name, a.airport, a.name from hotels h full outer join  airports a using (city) order by city;
+
+select city, h.name, a.airport, a.name from hotels h natural join  airports a;
+
+
+select * from hotels join             airports using (city);
+select * from hotels left outer join  airports using (city);
+select * from hotels right outer join airports using (city);
+select * from hotels full outer join  airports using (city);
+
+
+
+--- #43
+
+SELECT
+    CASE
+        WHEN Rating = 5 THEN 'Mega Hotel' 
+        WHEN Rating = 4 THEN 'Super Hotel'
+        ELSE 'Hotel'
+    END AS HotelLabel,
+    Name, country
+    FROM hotels;
+
+--- #46
+
+SELECT * FROM hotels
+	WHERE (rating % 3 = length(hotelName) % 3 
+				AND country <> 'Germany')
+		OR (country = 'Germany'
+				AND rating IN (3, 5))
+		OR (city = 'Wiesloch');
+
+--- #47 Set Operations
+
+--- cities with a hotel or an aiport
+SELECT City, Rating FROM hotels
+	UNION
+SELECT City, Terminals FROM airports;
+
+SELECT City FROM hotels
+	UNION ALL
+SELECT City FROM airports;
+
+--- cities with a hotel but not an airport
+SELECT City FROM hotels
+	EXCEPT
+SELECT City FROM airports;
+
+--- cities with a hotel and an airport
+SELECT City FROM hotels
+	INTERSECT
+SELECT City FROM airports;
+
+
+--- #46
+
+explain (analyze, verbose)
+SELECT * FROM hotels
+	WHERE (rating % 3 = length(hotelName) % 3 
+				AND country <> 'Germany')
+		OR (country = 'Germany'
+				AND rating IN (3, 5))
+		OR (city = 'Wiesloch');
+
+
+
+
+--- #52
+
+SELECT Name, Rating FROM hotels WHERE Rating <= all (SELECT Rating FROM hotels);
+
+
