@@ -1,3 +1,4 @@
+
 INSERT INTO bigairports VALUES 
             ('Amsterdam Schiphol', 'Amsterdam', 'Netherlands', '63625664', '1662282', '496256', '2787', 'AMS', 'EHAM', '6', '-4', '1916'),
             ('Hartsfield–Jackson Atlanta', 'Atlanta', 'USA', '104258124', '648595', '898356', '1518', 'ATL', 'KATL', '5', '316', '1925'),

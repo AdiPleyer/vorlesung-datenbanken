@@ -1,3 +1,6 @@
+--- table definitions for Hotel Booking System ---
+--- drops are in a separate file ---
+
 CREATE TABLE Hotels (
   UniqueName VARCHAR(50) PRIMARY KEY,
   HotelName  VARCHAR(50),

@@ -120,3 +120,4 @@ INSERT INTO Booking (UniqueName, RoomNumber, fromDate, toDate, persCount) VALUES
     ('THA-BBB',105,'2023-12-01','2023-12-05',4),
     ('THA-RimPai',102,'2024-01-15','2024-01-17',2),
     ('THA-NightBazaar',101,'2025-08-05','2025-08-07',1);
+    

@@ -1,4 +1,3 @@
-
 insert into countries values ('Sweden', 'Europe');
 insert into countries values ('Cambodia', 'Asia');
 insert into countries values ('France', 'Europe');
