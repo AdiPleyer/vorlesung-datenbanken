@@ -29,15 +29,15 @@ insert into NumberTest values
     (1.000000000000000000000000000001,  0.009,                   0.00000000000000000009,  0.2, 0.2),
     (1.0000000000000000000000000000001, 0.09,                    0.00000000000000000001,  0.2, 0.2);
 
---- Expecting:
---- 20.0000000000011111111111111111111  0.1                      0.1                      4.0  4.0
 
 
 select * from NumberTest;
 
+--- Expecting:
+--- 20.0000000000011111111111111111111  0.1                      0.1                      4.0  4.0
+
 select sum(f1) as sum_f1, sum(f2) as sum_f2, sum(f3) as sum_f3, sum(nullkoma2) as sum_nullkoma2, sum(nullkomma2) as sum_nullkomma2 
-  from NumberTest
-;
+  from NumberTest;
 
 select sum(myf) as sum_myf
   from (select cast (f2 as double precision) as myf from NumberTest
