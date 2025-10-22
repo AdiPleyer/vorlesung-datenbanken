@@ -52,9 +52,6 @@ select block, avg(SitzPreis)
 						;
 
 
----
-
-
 
 --- random free seat in room '01' with price category <= 5 - is this correct ???
 select * from SITZ, (select round(random()*4)+1 as r1, round(random()*4)+1 as r2) as r
