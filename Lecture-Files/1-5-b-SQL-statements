@@ -76,6 +76,13 @@ SELECT
     hotelName, country
     FROM hotels;
 
+--- employees and their salaries including bonus
+SELECT EEID, FullName, AnnualSalary as BaseSalary, BonusPercent,
+		AnnualSalary * BonusPercent / 100 AS BonusAmount,
+		AnnualSalary * (1 + BonusPercent / 100) AS TotalSalary
+	FROM employees
+	WHERE JobTitle = 'Manager';
+
 
 --- #46 complex WHERE clause
 SELECT * FROM hotels
@@ -109,6 +116,14 @@ SELECT City FROM airports;
 
 --- #47
 
+SELECT * FROM hotels
+	WHERE rating % 3 = length(hotelname) % 3 
+				AND country <> 'Germany'
+		OR country = 'Germany'
+				AND rating IN (3, 5)
+		OR city = 'Wiesloch';
+
+
 explain (analyze, verbose)
 --- in DNF
 SELECT * FROM hotels
@@ -130,65 +145,7 @@ SELECT * FROM hotels
           AND
           (country <> 'Germany' OR rating IN (3,5) OR city = 'Wiesloch');
 
---- #49
 
-SELECT * FROM airports;
-
-SELECT ap.*
-	FROM airports ap,
-		(SELECT airport as mycode FROM airports
-		         EXCEPT 
-		 SELECT code FROM bigairports) setdiff
-	WHERE ap.airport = setdiff.mycode;
-
-SELECT *
-	FROM airports ap
-	WHERE not ap.airport in (SELECT code FROM bigairports);
-
---- #52 EXISTS
-      
-
-
---- #53 Quantors
-
---- smallest rating overall
-SELECT hotelName, Rating FROM hotels WHERE Rating <= all (SELECT Rating FROM hotels);
-
---- smallest rating in germany
-SELECT hotelName, Rating FROM hotels
-    WHERE Country = 'Germany'
-        AND Rating <= ALL (SELECT Rating FROM hotels WHERE country = 'Germany');
-
---- smallest rating per country
-SELECT Country, hotelName, Rating FROM hotels h1
-    WHERE Rating <= ALL (SELECT Rating FROM hotels h2 WHERE h2.country = h1.country);
-
-
---- #54 GROUP BY and HAVING
-
---- average rating and count of hotels per country
-SELECT AVG(Rating), COUNT(Rating), Country
-	FROM hotels
-	GROUP BY Country
-
---- hotels with above average rating per country
-SELECT AVG(Rating), COUNT(Rating), Country
-	FROM hotels
-	GROUP BY Country
-	HAVING AVG(Rating) > (SELECT AVG(Rating) 
-							FROM hotels)
-    order by country desc;
-
-
-
-
---- #66 demo AVG on null values
-
-select * from Hotels;
-select avg(rating) from Hotels;
-select avg(rating) from Hotels where rating < 5;
-update hotels set rating = null where rating = 5 returning *;
-select avg(rating) from Hotels;
-update hotels set rating = 5 where rating is null returning *;
+--- #48 examples for operators
 
 

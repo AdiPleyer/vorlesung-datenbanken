@@ -1,0 +1,94 @@
+
+--- #49
+
+SELECT * FROM airports;
+
+SELECT ap.*
+	FROM airports ap,
+		(SELECT airport as mycode FROM airports
+		         EXCEPT 
+		 SELECT code FROM bigairports) setdiff
+	WHERE ap.airport = setdiff.mycode;
+
+SELECT *
+	FROM airports ap
+	WHERE not ap.airport in (SELECT code FROM bigairports);
+
+--- Nesting Queries in SELECT
+--- what is the employees salary vs average salary for their job title and country
+SELECT 
+    e.fullname,
+    e.annualsalary,
+    round(e.annualsalary /
+            (SELECT AVG(annualsalary)
+            FROM employees
+            WHERE JobTitle = e.JobTitle and country = e.country) * 100,2) AS salary_vs_avg_percent
+FROM employees e;
+
+--- Nesting in WHERE
+--- hotels with the highest rating
+SELECT hotelName FROM hotels
+	WHERE Rating = (SELECT MAX(Rating) FROM Hotels);
+
+
+--- Nesting CTE
+--- Common Table Expression (CTE) version
+WITH countryAverages as (
+    SELECT JobTitle, country, AVG(annualSalary) as avg_salary
+    FROM employees
+    GROUP BY JobTitle, country
+)
+SELECT 
+    e.fullname,
+    e.annualSalary,
+    round(e.annualSalary / ca.avg_salary * 100,2) AS salary_vs_avg_percent,
+    round(e.annualSalary - ca.avg_salary, 2) AS salary_vs_avg_diff
+FROM employees e
+    JOIN countryAverages ca
+        ON e.JobTitle = ca.JobTitle AND e.country = ca.country;
+
+
+
+--- #53 Quantors
+
+--- smallest rating overall
+SELECT hotelName, Rating FROM hotels WHERE Rating <= all (SELECT Rating FROM hotels);
+
+--- smallest rating in germany
+SELECT hotelName, Rating FROM hotels
+    WHERE Country = 'Germany'
+        AND Rating <= ALL (SELECT Rating FROM hotels WHERE country = 'Germany');
+
+--- smallest rating per country
+SELECT Country, hotelName, Rating FROM hotels h1
+    WHERE Rating <= ALL (SELECT Rating FROM hotels h2 WHERE h2.country = h1.country);
+
+
+--- #54 GROUP BY and HAVING
+
+--- average rating and count of hotels per country
+SELECT AVG(Rating), COUNT(Rating), Country
+	FROM hotels
+	GROUP BY Country
+
+--- hotels with above average rating per country
+SELECT AVG(Rating), COUNT(Rating), Country
+	FROM hotels
+	GROUP BY Country
+	HAVING AVG(Rating) > (SELECT AVG(Rating) 
+							FROM hotels)
+    order by country desc;
+
+
+
+
+--- #66 demo AVG on null values
+
+select * from Hotels;
+select avg(rating) from Hotels;
+select avg(rating) from Hotels where rating < 5;
+update hotels set rating = null where rating = 5 returning *;
+select avg(rating) from Hotels;
+update hotels set rating = 5 where rating is null returning *;
+
+

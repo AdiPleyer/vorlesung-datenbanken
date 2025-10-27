@@ -2041,3 +2041,11 @@ ALTER TABLE Employees ADD COLUMN LastName VARCHAR(50);
 update Employees set firstname = substr(fullname,1,strpos(fullname,' ')), 
                     lastname = substr(fullname,strpos(fullname,' ')+1) 
     where fullname like '% %';
+
+
+
+--- Turn BonusPercent into a decimal number
+ALTER TABLE Employees ADD COLUMN BonusP INT;
+update Employees set BonusP = cast(BonusPercent as INT);
+ALTER TABLE Employees DROP COLUMN BonusPercent;
+ALTER TABLE Employees RENAME COLUMN BonusP TO BonusPercent;
