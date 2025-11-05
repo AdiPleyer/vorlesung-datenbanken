@@ -1,4 +1,3 @@
-
 --- #49
 
 SELECT * FROM airports;
@@ -78,17 +77,4 @@ SELECT AVG(Rating), COUNT(Rating), Country
 	HAVING AVG(Rating) > (SELECT AVG(Rating) 
 							FROM hotels)
     order by country desc;
-
-
-
-
---- #66 demo AVG on null values
-
-select * from Hotels;
-select avg(rating) from Hotels;
-select avg(rating) from Hotels where rating < 5;
-update hotels set rating = null where rating = 5 returning *;
-select avg(rating) from Hotels;
-update hotels set rating = 5 where rating is null returning *;
-
 
