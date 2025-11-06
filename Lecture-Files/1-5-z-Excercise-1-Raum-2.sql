@@ -1,56 +1,4 @@
-
---- 3d
-
-select block, avg(sitzpreis) as dp 
-    from sitz 
-    join preis using(raumnr, preiskat)
-    where raumnr = '01'
-    group by block
-    order by dp desc;
-
---- 3e
-
-select * 
-    from sitz s1, sitz s2;
-    where 
-        s1.raumnr = s2.raumnr
-        and s1.block = s2.block
-        and s1.reihe = s2.reihe
-        and s1.belegung = false
-        and s2.belegung = false
-        and s1.sitznr = s2.sitznr - 1;
-
---- 3e erweitert um die Frage nach dem Gesamtpreis für beide Sitze
-
-select * from (
-    select s1.raumnr as derraum, *, p1.sitzpreis + p2.sitzpreis as zielpreis
-        from sitz as s1
-        join sitz as s2 using(raumnr, block, reihe)
-        join preis as p1 on s1.raumnr = p1.raumnr and s1.preiskat = p1.preiskat
-        join preis as p2 on s2.raumnr = p2.raumnr and s2.preiskat = p2.preiskat
-        where s1.belegung = false
-            and s2.belegung = false
-            and s1.sitznr = s2.sitznr - 1
-    ) as foo 
-    where derraum = '01'
-        and zielpreis <= 50;
-
---- more on rooms and prices
-
---- Block mit dem maximalen durchschnittlichen Sitzpreis im Raum '01' ---
-
-select block, avg(SitzPreis)
-		from SITZ join Preis using (RaumNr, PreisKat) 
-		where RaumNr = '01'
-		group by Block
-		having avg(SitzPreis) >= (
-			select max(durchschnitt) from (
-					select block, avg(SitzPreis) as durchschnitt
-						from SITZ join Preis using (RaumNr, PreisKat) 
-						where RaumNr = '01'
-						group by Block))
-						;
-
+--- other queries
 
 --- random free seat in room '01' with price category <= 5 - is this correct ???
 select * from SITZ, (select round(random()*4)+1 as r1, round(random()*4)+1 as r2) as r
@@ -71,7 +19,7 @@ select raumnr, block, avg(sitzpreis) as asp
 	group by raumnr, block order by avg(sitzpreis) desc
 	
 
---- block with the highest average seat price
+--- block with the highest average seat price over all rooms
 select * from (
 	select raumnr, block, avg(sitzpreis) as asp
 		from sitz join preis using (raumnr, preiskat) 
@@ -82,9 +30,9 @@ select * from (
             from sitz join preis using (raumnr, preiskat) 
             group by raumnr, block
             ) foo2
-        )
+        );
 		
---- find two adjacent free seats in room '01'
+--- find two adjacent free seats in room '01' using subselect
 select block, sitznr, (sitznr + 1) as zweitersitz, reihe from sitz s1
   where belegung = false
       and raumnr = '01'

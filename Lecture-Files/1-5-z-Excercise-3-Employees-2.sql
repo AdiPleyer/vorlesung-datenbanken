@@ -1,3 +1,4 @@
+--- more queries on employees table
 
 --- a. select employees with duplicate full names along with their country average salary and ratio
 
@@ -29,7 +30,7 @@ select country, ethnicity, gender, count(*)
     group by country, ethnicity, gender
     order by country, ethnicity, gender;
 
---- d. pairs of empoloyees with same job and with salary differing by 2% - avoid duplicate listing
+--- d. pairs of employees with same job and with salary differing by 2% - avoid duplicate listing
 
 select e1.eeid, e1.fullname, e1.annualsalary, e2.eeid, e2.fullname, e2.annualsalary, e1.JobTitle, e1.department, e1.country
     from employees as e1, employees as e2
