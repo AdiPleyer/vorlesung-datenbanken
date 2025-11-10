@@ -2,11 +2,11 @@
 
 begin work;  
 
-    SELECT balance FROM account WHERE account.id = "A";
+    SELECT balance FROM accounts WHERE accounts.id = 'B';
 
-    update account set balance = balance - 100 where id = "A";
+    update accounts set balance = balance - 50 where id = 'B';
 
-    update account set balance = balance + 100 where id = "B";
+    update accounts set balance = balance + 50 where id = 'A';
 
 commit work;
 

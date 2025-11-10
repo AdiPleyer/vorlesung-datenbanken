@@ -40,8 +40,8 @@ SELECT Count(Rating) FROM hotels;
 SELECT Count(DISTINCT Rating) FROM hotels;
 
 --- Expressions with NULL in data
-SELECT 10 * Rating FROM hotels;
-SELECT hotelName || ' - a ' || Rating || '-star hotel' FROM hotels;
+SELECT *, 10 * Rating FROM hotels;
+SELECT *, hotelName || ' - a ' || Rating || '-star hotel' FROM hotels;
 
 
 --- Aggregate functions with NULL in data
