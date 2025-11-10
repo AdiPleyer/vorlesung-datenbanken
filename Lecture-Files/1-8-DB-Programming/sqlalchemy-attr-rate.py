@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, MetaData, Table, select
 from MyPassword import MyPassword as pw
 import matplotlib.pyplot as plt
 
-# prepare the dtaabase access
+# prepare the database access
 # never share the password, but there are more solid ways to handle it ...
 DATABASE_URL = "postgresql://postgres:" + pw + "@localhost:5432/postgres"
 
