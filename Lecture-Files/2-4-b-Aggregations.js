@@ -78,6 +78,9 @@ db.regs.aggregate( [
 	
 // first project the array, then unwind it, then project the name of the player only
 db.regs.aggregate( [ 
+	{ $unwind : "$players" },
+] )
+db.regs.aggregate( [ 
 	{ $project: { "players": 1} },
 	{ $unwind : "$players" },
 ] )
