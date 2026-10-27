@@ -1,3 +1,7 @@
+--- --------------------------------------------------------------------------
+--- Clean up names, resolve duplicates
+--- --------------------------------------------------------------------------
+
 --- multiple steps to handle duplicate full names - determin and add -Smith to the last name 
 --- 1. determine duplicate fullnames
 
@@ -50,6 +54,9 @@ select fullname, substr(fullname,1,instr(fullname,' ')) as fn, substr(fullname,i
     from Employees;
 
 
+--- --------------------------------------------------------------------------
+--- Clean up IDs, resolve duplicates
+--- --------------------------------------------------------------------------
 
 --- duplicate and tripple EEIDs
 select eeid, count(eeid) from employees

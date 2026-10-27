@@ -1,5 +1,11 @@
 --- table definitions and sample data for RAUM, SITZ, PREIS ---
 --- Copy & paste all into https://dbfiddle.uk and enjoy!
+--- Do it in two parts for better visibility in DBFiddle
+
+--- ---------------------------------------------------
+--- Initial part
+--- ---------------------------------------------------
+
 
 --- table definitions
 create table RAUM (
@@ -125,4 +131,14 @@ insert into sitz
 --- randomly sitze belegen
 
 update sitz set Belegung = true
-    where floor(random()*10) <= 1
+    where floor(random()*10) <= 1;
+
+
+--- ---------------------------------------------------
+--- Your own part, paste separately
+--- ---------------------------------------------------
+
+select RaumNr, Block, count(*) 
+    from sitz
+    where Belegung = false
+    group by RaumNr, Block;

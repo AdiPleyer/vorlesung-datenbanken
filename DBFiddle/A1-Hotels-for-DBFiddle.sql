@@ -1,4 +1,10 @@
 --- Copy & paste all into https://dbfiddle.uk and enjoy!
+--- Do it in two parts for better visibility in DBFiddle
+
+--- ---------------------------------------------------
+--- Initial part
+--- ---------------------------------------------------
+
 
 --- create the table
 CREATE TABLE Hotels (
@@ -9,7 +15,7 @@ CREATE TABLE Hotels (
   Country    VARCHAR(50),
   WiFi       VARCHAR(5) default 'no');
 
---- inssert some data
+--- insert some data
 INSERT INTO hotels VALUES 
     ('HDB-HolidayInn', 'Holliday Inn', 'Heidelberg', '4', 'Germany', 'free'),
     ('WDF-HollidayInn', 'Holliday Inn', 'Walldorf', '4', 'Germany', 'free'),
@@ -36,6 +42,10 @@ INSERT INTO hotels VALUES
     ('THA-RimPai', 'Rim Pai Cottage', 'Pai', 4, 'Thailand', 'free'),
     ('THA-NightBazaar', 'Night Bazaar Inn', 'Chiang Mai', 3, 'Thailand', 'free');
 
---- play around and excercise
+
+--- ---------------------------------------------------
+--- Your own part, paste separately
+--- ---------------------------------------------------
+
 select * from hotels where country = 'Germany';
 
