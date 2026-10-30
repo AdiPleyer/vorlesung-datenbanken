@@ -128,10 +128,11 @@ insert into sitz
         from sitz 
         where RaumNr = '01';
 
---- randomly sitze belegen
+--- sitze belegen, so dass es ein wenig zufällig aussieht aber trotzdem reproduzierbar ist
 
 update sitz set Belegung = true
-    where floor(random()*10) <= 1;
+    where Reihe * SitzNr % 7 in (0,1)
+        or (Reihe + SitzNr) % 7 in (0,1,2);
 
 
 --- ---------------------------------------------------
@@ -141,4 +142,9 @@ update sitz set Belegung = true
 select RaumNr, Block, count(*) 
     from sitz
     where Belegung = false
-    group by RaumNr, Block;
+    group by RaumNr, Block
+    order by RaumNr, Block;
+
+select RaumNr, Block, Reihe, SitzNr, belegung
+    from Sitz
+    order by  RaumNr, Block, Reihe, SitzNr;
