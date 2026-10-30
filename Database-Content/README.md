@@ -2,19 +2,20 @@ Files in this folder can be used to setup or clear the database tables and data 
 
 ## Hotels Examples
 
-Files:
-- A1... definitions of all tables
-- A2, A3, A4 contain the inserts into tables from A1
+- A1... definitions of all tables incl. Hotels and related tables from the lecture
+- A2, A3, A4 contain the records to be inserted into tables from A1
+
+All files have been tested on PostgreSQL adn SQLite, but should work easily also on other databases.
 
 ## Room Example
 
-- B1 just one file, hope this works everywhere
+- B1 is just one file for the example on room bookings, hope this works everywhere
 
 ## Employee Example
 
-This is some generated data which was not perfect for a clean database. Therefore, you need the following:
-- C1 file depending on the database you use. Currently only PostgresQL and SQLite are tested. Since SQLite is a bit special, you can assume that the PostgreSQL file will work for other databases as well, maybe minor changes might be necessary.
-- C2 clean up depending on database
-- C3 is the final cleanup and should be independent of the database
+This is some artificial generated data of employee in a global company. Very nice 1000 records for very interesting queries.
+
+- C1... is the one file, one create table and bulk inserts.
+
 
 

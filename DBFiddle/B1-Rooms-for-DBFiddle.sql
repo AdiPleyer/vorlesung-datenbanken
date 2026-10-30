@@ -117,12 +117,24 @@ insert into PREIS values ('01', 1, 20),
                          ('01', 3, 28),
                          ('01', 4, 35),
                          ('01', 5, 50);
+insert into PREIS values ('02', 1, 22),
+                         ('02', 2, 27),
+                         ('02', 3, 31),
+                         ('02', 4, 42),
+                         ('02', 5, 60);
+insert into PREIS values ('03', 1, 40),
+                         ('03', 2, 50),
+                         ('03', 3, 70),
+                         ('03', 4, 90),
+                         ('03', 5, 150);
 
+--- copy raum 01 into 02 and 03
 
 insert into sitz 
     select '02', Block, Reihe, SitzNr, Belegung, PreisKat 
         from sitz 
         where RaumNr = '01';
+
 insert into sitz 
     select '03', Block, Reihe, SitzNr, Belegung, PreisKat 
         from sitz 
@@ -145,6 +157,3 @@ select RaumNr, Block, count(*)
     group by RaumNr, Block
     order by RaumNr, Block;
 
-select RaumNr, Block, Reihe, SitzNr, belegung
-    from Sitz
-    order by  RaumNr, Block, Reihe, SitzNr;

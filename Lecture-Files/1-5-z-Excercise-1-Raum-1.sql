@@ -117,17 +117,17 @@ select s1.raumnr as derraum, s1.reihe, s1.sitznr, s2.sitznr, s1.preiskat, s2.pre
 
 --- Raum 3f+: 3f erweitert um die Frage nach dem maximalem Gesamtpreis für beide Sitze
 
-select * from (
-    select s1.raumnr as derraum, s1.reihe, s1.sitznr, s2.sitznr, p1.sitzpreis + p2.sitzpreis as zielpreis
-        from sitz as s1
-        join sitz as s2 using(raumnr, block, reihe)
-        join preis as p1 on s1.raumnr = p1.raumnr and s1.preiskat = p1.preiskat
-        join preis as p2 on s2.raumnr = p2.raumnr and s2.preiskat = p2.preiskat
-        where s1.belegung = false
-            and s2.belegung = false
-            and s1.sitznr = s2.sitznr - 1
-    ) as foo 
-    where derraum = '01'
-        and zielpreis <= 50;
+    select * from (
+        select s1.raumnr as derraum, s1.reihe, s1.sitznr, s2.sitznr, p1.sitzpreis + p2.sitzpreis as zielpreis
+            from sitz as s1
+            join sitz as s2 using(raumnr, block, reihe)
+            join preis as p1 on s1.raumnr = p1.raumnr and s1.preiskat = p1.preiskat
+            join preis as p2 on s2.raumnr = p2.raumnr and s2.preiskat = p2.preiskat
+            where s1.belegung = false
+                and s2.belegung = false
+                and s1.sitznr = s2.sitznr - 1
+        ) as foo 
+        where derraum = '03'
+            and zielpreis <= 100;
 
 
